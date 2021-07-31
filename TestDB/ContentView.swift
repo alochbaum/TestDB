@@ -17,16 +17,33 @@ struct ContentView: View {
     private var items: FetchedResults<Item>
 
     var body: some View {
+        Button("Add") {
+            let testdata = "Bob"
+        }
+        Button("Delete Item")
+        {
+           // some later
+        }
         List {
             ForEach(items) { item in
                 Text("Item at \(item.timestamp!, formatter: itemFormatter)")
             }
             .onDelete(perform: deleteItems)
         }
-        .toolbar {
-            Button(action: addItem) {
-                Label("Add Item", systemImage: "plus")
+        HStack {
+            Image(systemName: "photo")
+            VStack(alignment: .leading){
+                Text("I need to learn more about the delete button")
+                Text("Another line")
+                    .font(.subheadline)
+                    .foregroundColor(Color.gray)
             }
+        }
+            .toolbar {
+                Button(action: addItem) {
+                    Label("Add Item", systemImage: "plus")
+                }
+        
         }
     }
 
