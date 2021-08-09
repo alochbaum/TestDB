@@ -12,23 +12,25 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true),],
         animation: .default)
     private var items: FetchedResults<Item>
 
     var body: some View {
         Button("Add") {
-            let testdata = "Bob"
+            _ = "Bob"
         }
-        Button("Delete Item")
+        Button("Delete row")
         {
            // some later
         }
         List {
-            ForEach(items) { item in
+            ForEach(items) {
+                item in
                 Text("Item at \(item.timestamp!, formatter: itemFormatter)")
+                Text(item.name ?? "Unknown")
             }
-            .onDelete(perform: deleteItems)
+           // .onDelete(perform: deleteItems)
         }
         HStack {
             Image(systemName: "photo")
@@ -51,7 +53,7 @@ struct ContentView: View {
         withAnimation {
             let newItem = Item(context: viewContext)
             newItem.timestamp = Date()
-
+            newItem.name="Bob"
             do {
                 try viewContext.save()
             } catch {
@@ -63,9 +65,9 @@ struct ContentView: View {
         }
     }
 
-    private func deleteItems(offsets: IndexSet) {
+    private func deleteItems() {
         withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
+           // items[0].forEach(viewContext.delete)
 
             do {
                 try viewContext.save()
